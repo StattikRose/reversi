@@ -1,6 +1,7 @@
 <template>
   <div
     class="h-24 w-24 rounded flex items-center justify-center bg-green-100"
+    :class="hoverClass"
     @click="cellClicked"
   >
     <div
@@ -17,7 +18,7 @@ export default {
   props: {
     row: Number,
     col: Number,
-    cellState: Number,
+    cellState: { type: Number, default: 0 },
   },
   computed: {
     showMarker() {
@@ -30,13 +31,14 @@ export default {
           : "bg-black"
         : undefined;
     },
+    hoverClass() {
+      return !this.showMarker ? "cursor-pointer hover:bg-green-200" : undefined;
+    },
   },
   methods: {
     cellClicked() {
-      const { row, col } = this;
-
       if (!this.showMarker) {
-        this.$emit("cell-clicked", { row, col });
+        this.$emit("cell-clicked");
       }
     },
   },
